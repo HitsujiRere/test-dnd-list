@@ -8,11 +8,12 @@ import { FlippedItem } from "./FlippedItem";
 import type { Item } from "./item";
 import { ListItem } from "./ListItem";
 import { ListItemView } from "./ListItemView";
+import { useTestItems } from "./useTestItems";
 
 const ITEMS: Item[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
 export const DnDList = () => {
-  const [items, setItems] = useState(ITEMS);
+  const { items, setItems, appendItem } = useTestItems(ITEMS);
 
   const [activeId, setActiveId] = useState<number | null>(null);
   const activeItem = items.find((item) => item.id === activeId);
@@ -57,7 +58,13 @@ export const DnDList = () => {
                 flipId={item.id}
                 disabled={!!activeItem}
               >
-                <ListItem key={item.id} item={item} />
+                <ListItem
+                  key={item.id}
+                  item={item}
+                  onRemove={() =>
+                    setItems((items) => items.filter((x) => x.id !== item.id))
+                  }
+                />
               </FlippedItem>
             ))}
           </Flipper>
@@ -70,7 +77,7 @@ export const DnDList = () => {
       <button
         type="button"
         className="border-2 border-neutral-500 p-4"
-        onClick={() => setItems((item) => [...item, { id: item.length + 1 }])}
+        onClick={() => appendItem()}
       >
         +
       </button>

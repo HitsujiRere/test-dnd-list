@@ -6,7 +6,12 @@ import { cn } from "@/lib/utils";
 import type { Item } from "./item";
 import { ListItemView } from "./ListItemView";
 
-export const ListItem = ({ item }: { item: Item }) => {
+type ListItemProps = {
+  item: Item;
+  onRemove: () => void;
+};
+
+export const ListItem = ({ item, onRemove }: ListItemProps) => {
   const {
     isDragging,
     setActivatorNodeRef,
@@ -35,6 +40,7 @@ export const ListItem = ({ item }: { item: Item }) => {
           attributes,
           listeners,
         }}
+        onRemove={onRemove}
       />
     </div>
   );
