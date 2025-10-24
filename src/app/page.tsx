@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { DnDList } from "@/features/DndList";
 
 export default function Home() {
   return (
-    <main className="p-2">
-      <Button>Hello world</Button>
+    <main className="p-8">
+      <DnDList />
     </main>
   );
 }
