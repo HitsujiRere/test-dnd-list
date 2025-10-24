@@ -18,7 +18,6 @@ export const ListItem = ({ item }: { item: Item }) => {
   } = useSortable({ id: item.id });
 
   return (
-    // DOM全体
     <div
       ref={setNodeRef}
       className={cn({
