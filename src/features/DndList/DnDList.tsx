@@ -4,6 +4,7 @@ import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";
+import { shuffle } from "@/utils/shuffle";
 import { FlippedItem } from "./FlippedItem";
 import type { Item } from "./item";
 import { ListItem } from "./ListItem";
@@ -18,22 +19,11 @@ export const DnDList = () => {
   const [activeId, setActiveId] = useState<number | null>(null);
   const activeItem = items.find((item) => item.id === activeId);
 
-  const shuffleItems = () => {
-    setItems((items) => {
-      const newItems = [...items];
-      for (let i = items.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newItems[i], newItems[j]] = [newItems[j], newItems[i]];
-      }
-      return newItems;
-    });
-  };
-
   return (
     <div className="flex flex-col gap-4">
       <DndContext
-        onDragStart={(event) => {
-          setActiveId(event.active.id as number);
+        onDragStart={({ active }) => {
+          setActiveId(active.id as number);
         }}
         onDragEnd={({ active, over }) => {
           if (over == null || active.id === over.id) {
@@ -43,7 +33,6 @@ export const DnDList = () => {
           const newIndex = items.findIndex((item) => item.id === over.id);
           const newItems = arrayMove(items, oldIndex, newIndex);
           setItems(newItems);
-
           // 項目を更新した瞬間はまだドラッグ中にしたいのでワンテンポ遅れてからfalseにする
           setTimeout(() => {
             setActiveId(null);
@@ -51,7 +40,10 @@ export const DnDList = () => {
         }}
       >
         <SortableContext items={items}>
-          <Flipper flipKey={items.map((item) => item.id).join(",")}>
+          <Flipper
+            flipKey={items.map((item) => item.id).join(",")}
+            className="flex flex-col gap-4"
+          >
             {items.map((item) => (
               <FlippedItem
                 key={item.id}
@@ -85,7 +77,7 @@ export const DnDList = () => {
       <button
         type="button"
         className="border-2 border-neutral-500 p-4"
-        onClick={shuffleItems}
+        onClick={() => setItems((items) => shuffle(items))}
       >
         shuffle
       </button>
