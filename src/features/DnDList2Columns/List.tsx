@@ -1,7 +1,7 @@
 "use client";
 
 import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
-import { arraySwap, SortableContext } from "@dnd-kit/sortable";
+import { SortableContext } from "@dnd-kit/sortable";
 import { useId, useState } from "react";
 import { Flipper } from "react-flip-toolkit";
 import { shuffle } from "@/utils/shuffle";
