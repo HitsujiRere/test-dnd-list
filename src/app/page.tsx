@@ -1,14 +1,13 @@
-import { DnDList2Columns } from "@/features/DnDList2Columns";
-import { DnDList } from "@/features/DndList";
+import { DnDFlipList } from "@/features/DnDFlipList";
 
 export default function Home() {
   return (
     <main className="p-8">
-      <DnDList />
+      {/* <DnDList /> */}
 
-      <div className="m-4 border border-black" />
+      {/* <DnDList2Columns /> */}
 
-      <DnDList2Columns />
+      <DnDFlipList />
     </main>
   );
 }

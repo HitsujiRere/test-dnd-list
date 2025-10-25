@@ -1,7 +1,6 @@
 "use client";
 
 import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
-import { SortableContext } from "@dnd-kit/sortable";
 import { useId, useState } from "react";
 import { Flipper } from "react-flip-toolkit";
 import { shuffle } from "@/utils/shuffle";
@@ -47,10 +46,10 @@ export const List = () => {
           const newIndex = items.findIndex((item) => item.id === over.id);
           // const newItems = arraySwap(items, oldIndex, newIndex);
           const newItems = [...items];
-          [newItems[oldIndex], newItems[newIndex]] = swapItem(
-            newItems[oldIndex],
-            newItems[newIndex],
-          );
+          [newItems[oldIndex].id, newItems[newIndex].id] = [
+            newItems[newIndex].id,
+            newItems[oldIndex].id,
+          ];
           setItems(newItems);
         }}
         onDragEnd={() => {
@@ -61,34 +60,29 @@ export const List = () => {
         }}
       >
         <div className="grid grid-cols-2 gap-8">
-          <SortableContext items={items}>
-            <Flipper
-              flipKey={items.map((item) => item.id).join(",")}
-              className="col-span-2 grid grid-flow-dense grid-cols-2 gap-8"
-            >
-              {items.map((item) => (
-                <div key={item.id}>
-                  <FlippedItem
+          <Flipper
+            flipKey={items.map((item) => item.id).join(",")}
+            className="col-span-2 grid grid-flow-dense grid-cols-2 gap-8"
+          >
+            {items.map((item, index) => (
+              <div key={item.id}>
+                <FlippedItem key={item.id} flipId={item.id}>
+                  <ListItem
                     key={item.id}
-                    flipId={item.id}
-                    disabled={!!activeItem}
-                  >
-                    <ListItem
-                      key={item.id}
-                      item={item}
-                      onRemove={() =>
-                        setItems((items) =>
-                          items.filter(
-                            (filtingItem) => filtingItem.id !== item.id,
-                          ),
-                        )
-                      }
-                    />
-                  </FlippedItem>
-                </div>
-              ))}
-            </Flipper>
-          </SortableContext>
+                    item={item}
+                    index={index}
+                    onRemove={() =>
+                      setItems((items) =>
+                        items.filter(
+                          (filtingItem) => filtingItem.id !== item.id,
+                        ),
+                      )
+                    }
+                  />
+                </FlippedItem>
+              </div>
+            ))}
+          </Flipper>
           <button
             type="button"
             className="border-2 border-neutral-500 p-4"
