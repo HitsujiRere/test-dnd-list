@@ -1,7 +1,7 @@
 "use client";
 
 import { DndContext, DragOverlay } from "@dnd-kit/core";
-import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import { arraySwap, SortableContext } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";
 import { shuffle } from "@/utils/shuffle";
@@ -31,7 +31,7 @@ export const DnDList = () => {
           }
           const oldIndex = items.findIndex((item) => item.id === active.id);
           const newIndex = items.findIndex((item) => item.id === over.id);
-          const newItems = arrayMove(items, oldIndex, newIndex);
+          const newItems = arraySwap(items, oldIndex, newIndex);
           setItems(newItems);
           // 項目を更新した瞬間はまだドラッグ中にしたいのでワンテンポ遅れてからfalseにする
           setTimeout(() => {

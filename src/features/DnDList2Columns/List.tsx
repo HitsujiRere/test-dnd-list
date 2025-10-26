@@ -4,6 +4,7 @@ import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 import { useId, useState } from "react";
 import { Flipper } from "react-flip-toolkit";
+import { cn } from "@/lib/utils";
 import { shuffle } from "@/utils/shuffle";
 import { FlippedItem } from "./FlippedItem";
 import { type Item, swapItem } from "./item";
@@ -22,8 +23,6 @@ const ITEMS: Item[] = [
 
 export const List = () => {
   const { items, setItems, appendItem } = useTestItems(ITEMS);
-  // const itemsA = items.filter((item) => item.team === "A");
-  // const itemsB = items.filter((item) => item.team === "B");
 
   const [activeId, setActiveId] = useState<number | null>(null);
   const activeItem = items.find((item) => item.id === activeId);
@@ -67,7 +66,13 @@ export const List = () => {
               className="col-span-2 grid grid-flow-dense grid-cols-2 gap-8"
             >
               {items.map((item) => (
-                <div key={item.id}>
+                <div
+                  key={item.id}
+                  className={cn({
+                    "col-start-1": item.team === "A",
+                    "col-start-2": item.team === "B",
+                  })}
+                >
                   <FlippedItem
                     key={item.id}
                     flipId={item.id}

@@ -3,6 +3,7 @@
 import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import { useId, useState } from "react";
 import { Flipper } from "react-flip-toolkit";
+import { cn } from "@/lib/utils";
 import { shuffle } from "@/utils/shuffle";
 import { FlippedItem } from "./FlippedItem";
 import { type Item, swapItem } from "./item";
@@ -65,7 +66,13 @@ export const List = () => {
             className="col-span-2 grid grid-flow-dense grid-cols-2 gap-8"
           >
             {items.map((item, index) => (
-              <div key={item.id}>
+              <div
+                key={item.id}
+                className={cn({
+                  "col-start-1": item.team === "A",
+                  "col-start-2": item.team === "B",
+                })}
+              >
                 <FlippedItem key={item.id} flipId={item.id}>
                   <ListItem
                     key={item.id}
