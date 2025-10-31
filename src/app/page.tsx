@@ -1,3 +1,4 @@
+import { DnDFlipList } from "@/features/DnDFlipList";
 import { MultipleSortableLists } from "@/features/MultipleSortableLists";
 
 export default function Home() {

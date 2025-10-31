@@ -62,7 +62,7 @@ export const List = () => {
       >
         <div className="grid grid-cols-2 gap-8">
           <Flipper
-            flipKey={items.map((item) => item.id).join(",")}
+            flipKey={items.map((item) => `${item.id};${item.team}`).join(",")}
             className="col-span-2 grid grid-flow-dense grid-cols-2 gap-8"
           >
             {items.map((item, index) => (
