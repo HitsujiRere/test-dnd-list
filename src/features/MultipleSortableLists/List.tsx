@@ -3,9 +3,11 @@
 import { move } from "@dnd-kit/helpers";
 import { DragDropProvider, DragOverlay } from "@dnd-kit/react";
 import { useState } from "react";
+import { Flipper } from "react-flip-toolkit";
 import { Button } from "@/components/ui/button";
 import { choice } from "@/utils/choice";
 import { Column } from "./Column";
+import { FlippedItem } from "./FlippedItem";
 import { Item } from "./Item";
 import { ItemView } from "./ItemView";
 
@@ -41,18 +43,26 @@ export const List = () => {
         setItems((items) => move(items, event));
       }}
     >
-      <div className="flex flex-wrap gap-8">
-        {Object.entries(items).map(([column, items]) => (
-          <Column key={column} id={column}>
-            <div>{column}</div>
-            {items.map((id, index) => (
-              <Item key={id} id={id} index={index} column={column} />
-            ))}
-          </Column>
-        ))}
+      <Flipper
+        flipKey={Object.entries(items)
+          .map(([_column, items]) => items.join(","))
+          .join(";")}
+      >
+        <div className="flex flex-wrap gap-8">
+          {Object.entries(items).map(([column, items]) => (
+            <Column key={column} id={column}>
+              <div>{column}</div>
+              {items.map((id, index) => (
+                <FlippedItem key={id} flipId={id}>
+                  <Item id={id} index={index} column={column} />
+                </FlippedItem>
+              ))}
+            </Column>
+          ))}
 
-        <Button onClick={shuffleItems}>shuffle</Button>
-      </div>
+          <Button onClick={shuffleItems}>shuffle</Button>
+        </div>
+      </Flipper>
 
       <DragOverlay>
         {(source) => <ItemView id={source.id as string} />}

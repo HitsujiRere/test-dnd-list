@@ -5,7 +5,7 @@ import { arraySwap, SortableContext } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";
 import { shuffle } from "@/utils/shuffle";
-import { FlippedItem } from "./FlippedItem";
+import { FlippedItem } from "../MultipleSortableLists/FlippedItem";
 import type { Item } from "./item";
 import { ListItem } from "./ListItem";
 import { ListItemView } from "./ListItemView";
