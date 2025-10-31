@@ -4,9 +4,9 @@ import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 import { useId, useState } from "react";
 import { Flipper } from "react-flip-toolkit";
+import { FlippedItem } from "@/components/FlippedItem";
 import { cn } from "@/lib/utils";
 import { shuffle } from "@/utils/shuffle";
-import { FlippedItem } from "./FlippedItem";
 import { type Item, swapItem } from "./item";
 import { ListItem } from "./ListItem";
 import { ListItemView } from "./ListItemView";
@@ -66,17 +66,17 @@ export const List = () => {
               className="col-span-2 grid grid-flow-dense grid-cols-2 gap-8"
             >
               {items.map((item) => (
-                <div
+                <FlippedItem
                   key={item.id}
-                  className={cn({
-                    "col-start-1": item.team === "A",
-                    "col-start-2": item.team === "B",
-                  })}
+                  flipId={item.id}
+                  disabled={!!activeItem}
                 >
-                  <FlippedItem
+                  <div
                     key={item.id}
-                    flipId={item.id}
-                    disabled={!!activeItem}
+                    className={cn({
+                      "col-start-1": item.team === "A",
+                      "col-start-2": item.team === "B",
+                    })}
                   >
                     <ListItem
                       key={item.id}
@@ -89,8 +89,8 @@ export const List = () => {
                         )
                       }
                     />
-                  </FlippedItem>
-                </div>
+                  </div>
+                </FlippedItem>
               ))}
             </Flipper>
           </SortableContext>

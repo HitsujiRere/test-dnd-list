@@ -4,8 +4,8 @@ import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { arraySwap, SortableContext } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";
+import { FlippedItem } from "@/components/FlippedItem";
 import { shuffle } from "@/utils/shuffle";
-import { FlippedItem } from "../MultipleSortableLists/FlippedItem";
 import type { Item } from "./item";
 import { ListItem } from "./ListItem";
 import { ListItemView } from "./ListItemView";
@@ -50,13 +50,15 @@ export const DnDList = () => {
                 flipId={item.id}
                 disabled={!!activeItem}
               >
-                <ListItem
-                  key={item.id}
-                  item={item}
-                  onRemove={() =>
-                    setItems((items) => items.filter((x) => x.id !== item.id))
-                  }
-                />
+                <div>
+                  <ListItem
+                    key={item.id}
+                    item={item}
+                    onRemove={() =>
+                      setItems((items) => items.filter((x) => x.id !== item.id))
+                    }
+                  />
+                </div>
               </FlippedItem>
             ))}
           </Flipper>

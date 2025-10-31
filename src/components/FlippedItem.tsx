@@ -1,5 +1,3 @@
-"use client";
-
 import { type ReactNode, useRef } from "react";
 import { Flipped, spring } from "react-flip-toolkit";
 
@@ -56,7 +54,7 @@ export const FlippedItem = ({
         return !disabled && !isExitingRef.current;
       }}
     >
-      <div>{children}</div>
+      {children}
     </Flipped>
   );
 };

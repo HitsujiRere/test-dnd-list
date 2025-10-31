@@ -4,10 +4,10 @@ import { move } from "@dnd-kit/helpers";
 import { DragDropProvider, DragOverlay } from "@dnd-kit/react";
 import { useState } from "react";
 import { Flipper } from "react-flip-toolkit";
+import { FlippedItem } from "@/components/FlippedItem";
 import { Button } from "@/components/ui/button";
 import { choice } from "@/utils/choice";
 import { Column } from "./Column";
-import { FlippedItem } from "./FlippedItem";
 import { Item } from "./Item";
 import { ItemView } from "./ItemView";
 
